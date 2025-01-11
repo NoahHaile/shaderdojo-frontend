@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShaderDojo</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/index.css">
+</head>
+
+<body>
+    <header>
+        <div class="title-container">
+            <img src="../imgs/DojoLogo.png" class="logo" />
+            <h1 class="title">ShaderDojo</h1>
+        </div>
+        <nav>
+            <ul class="nav-container">
+                <li><a href="#" class="nav-link">Problems</a></li>
+                <li><a href="#" class="nav-link">Discussion</a></li>
+                <li><a href="#" class="nav-link">Profile</a></li>
+            </ul>
+        </nav>
+        <div class="menu-button" onclick="toggleDrawer()">☰</div>
+    </header>
+    <div id="drawer" class="drawer">
+        <a href="#" onclick="closeDrawer()">Problems</a>
+        <a href="#" onclick="closeDrawer()">Discussion</a>
+        <a href="#" onclick="closeDrawer()">Profile</a>
+    </div>
+
+    <script>
+        const drawer = document.getElementById("drawer");
+
+        function toggleDrawer() {
+            drawer.classList.toggle("open");
+        }
+
+        function closeDrawer() {
+            drawer.classList.remove("open");
+        }
+    </script>
+
+    <main class="hero">
+        <h1 class="page-title">Get Started With Shader Programs</h1>
+        <div class="program">
+            <canvas id="shaderCanvas"></canvas>
+            <div class="editor-container">
+                <form>
+                    <div id="editor"></div>
+                </form>
+            </div>
+        </div>
+        <div class="button-container">
+            <button type="button" class="runner" onclick="buttonClick(this); runShader()">Run</button>
+        </div>
+        <p class="description">ShaderDojo is a mix between <a class="inner-link" href="https://shadertoy.com/"
+                target="_blank">ShaderToy</a> and <a class="inner-link" href="https://projecteuler.net/"
+                target="_blank">Project Euler</a>.
+            Practice on simple exercises while you figure out the ropes.
+            Start digging through <a class="inner-link" href="/list">one of our problems</a> and
+            sharpen your creative coding skills.
+        </p>
+    </main>
+    <script src="../scripts/button.js"></script>
+
+    <section class="resources">
+        <h1 class="sub-title">Resources</h1>
+        <p class="small-description">Below are beginner-friendly resources to help you get started.
+        </p>
+
+        <div class="video-cards">
+
+            <iframe src="https://www.youtube.com/embed/f4s1h2YETNY?si=90oL2MV1scoKdzp9" title="Tutorial 1"
+                class="video-container" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+            </iframe>
+
+            <iframe src="https://www.youtube.com/embed/u5HAYVHsasc?si=VLWjzB88hRoMoHlK" title="Tutorial 2"
+                class="video-container" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+            </iframe>
+
+
+            <iframe src="https://www.youtube.com/embed/khblXafu7iA?si=56vd0fJkYxsUb2KB" title="Tutorial 3"
+                class="video-container" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+            </iframe>
+
+
+        </div>
+    </section>
+
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div>
+                <p class="footer-text"><span style="font-weight: bold;">Bug Reports & Inquiries:</span> <a
+                        href="mailto:noah@noahhaile.com" class="email-link">noah@noahhaile.com</a></p>
+            </div>
+            <div class="social-icons">
+                <!-- Twitter -->
+                <a href="https://twitter.com/intent/tweet" target="_blank" class="social-link" title="Share on Twitter">
+                    <img src="https://img.icons8.com/ios-filled/24/twitter.png" alt="Twitter">
+                </a>
+                <!-- Facebook -->
+                <a href="https://facebook.com/sharer/sharer.php" target="_blank" class="social-link"
+                    title="Share on Facebook">
+                    <img src="https://img.icons8.com/ios-filled/24/facebook-new.png" alt="Facebook">
+                </a>
+                <!-- Email -->
+                <a href="mailto:?subject" target="_blank" class="social-link" title="Share via Email">
+                    <img src="https://img.icons8.com/ios-filled/24/email.png" alt="Email">
+                </a>
+                <!-- LinkedIn -->
+                <a href="https://www.linkedin.com/sharing/share-offsite" target="_blank" class="social-link"
+                    title="Share on LinkedIn">
+                    <img src="https://img.icons8.com/ios-filled/24/linkedin.png" alt="LinkedIn">
+                </a>
+                <!-- Reddit -->
+                <a href="https://reddit.com/submit" target="_blank" class="social-link" title="Share on Reddit">
+                    <img src="https://img.icons8.com/ios-filled/24/reddit.png" alt="Reddit">
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script id="constants">
+        const fragmentShaderSource = `
+void main()
+{
+    // Normalized pixel coordinates (from 0 to 1)
+    vec2 uv = gl_FragCoord.xy/u_resolution.xy;
+
+    // Time varying pixel color
+    vec3 col = 0.5 + 0.5*cos(u_time+uv.xyx+vec3(0,2,4));
+
+    // Output to screen
+    gl_FragColor = vec4(col,1.0);
+}
+`
+    </script>
+    <script src="../lib/ace/ace.js"></script>
+    <script src="../lib/ace/mode.js"></script>
+    <script src="../lib/ace/theme.js"></script>
+    <script src="../scripts/shader.js"></script>
+</body>
+
+</html>

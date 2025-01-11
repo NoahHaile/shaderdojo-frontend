@@ -1,0 +1,204 @@
+body {
+    display: grid;
+    grid-template-rows: auto auto auto auto;
+    grid-template-columns: 5fr 7fr;
+    grid-template-areas:
+        "header              header"
+        "problem-title       problem-title"
+        "problem-description problem-image"
+        "editor              shaderCanvas";
+
+    gap: 0 var(--normal-padding);
+}
+
+
+
+/* Problem-title */
+.problem-title-container {
+    grid-area: problem-title;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+
+    gap: var(--tiny-padding);
+
+    grid-area: problem-title;
+    padding: 0;
+    margin: 0;
+
+    padding-top: calc(var(--tiny-padding) / 2);
+    padding-bottom: calc(var(--tiny-padding) / 2);
+
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.expand-arrow {
+    width: 25px;
+    height: 25px;
+
+    padding: 0;
+    margin: 0;
+
+    padding-left: 25px;
+    padding-right: 25px;
+
+    transform: rotate(90deg);
+    transition: transform 0.3s;
+
+}
+
+.problem-title {
+    font-size: var(--large-font-size);
+    font-weight: normal;
+    color: var(--font-color);
+
+
+    padding: 0;
+    margin: 0;
+}
+
+.expansion-instruction {
+    font-size: var(--smaller-font-size);
+    color: var(--font-color-light);
+    font-style: italic;
+}
+
+
+
+/* Description */
+.problem-description {
+    grid-area: problem-description;
+    padding-top: calc(var(--tiny-padding) / 2);
+    padding-bottom: calc(var(--tiny-padding) / 2);
+    padding-left: calc(var(--normal-padding) + var(--small-padding));
+    height: calc((37.5vw * 9) / 16);
+    overflow: auto;
+}
+
+.problem-description p {
+    font-size: var(--small-font-size);
+    color: var(--font-color);
+
+    margin-bottom: calc(var(--tiny-padding) / 2);
+    text-align: justify;
+    hyphens: auto;
+}
+
+
+
+/* Image */
+.problem-image {
+    grid-area: problem-image;
+    width: 37.5vw;
+    height: calc((37.5vw * 9) / 16);
+    object-fit: cover;
+
+    padding-top: calc(var(--tiny-padding) / 2);
+    padding-bottom: calc(var(--tiny-padding) / 2);
+
+    margin-bottom: var(--tiny-padding);
+}
+
+
+/* Editor */
+.editor-container {
+    grid-area: editor;
+    padding-top: calc(var(--tiny-padding) / 2);
+    padding-bottom: calc(var(--tiny-padding) / 2);
+}
+
+.status-text {
+    font-size: var(--smaller-font-size);
+    color: var(--font-color-light);
+    font-style: italic;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-start;
+    gap: calc(var(--tiny-padding) / 2);
+}
+
+#editor {
+    height: 28.125vw;
+    width: 50vw;
+    font-size: var(--small-font-size);
+    line-height: 1.5;
+}
+
+.button-container {
+    display: flex;
+    gap: var(--small-padding);
+}
+
+.button1 {
+    padding: calc(var(--tiny-padding) / 2) calc(var(--tiny-padding) / 2);
+    font-size: var(--normal-font-size);
+    cursor: pointer;
+    background-color: var(--link-color);
+    color: var(--font-color-white);
+}
+
+.button2 {
+    padding: calc(var(--tiny-padding) / 2) calc(var(--tiny-padding) / 2);
+    font-size: var(--normal-font-size);
+    cursor: pointer;
+
+    background-color: var(--background-color);
+}
+
+
+/* Shader Canvas */
+
+#shaderCanvas {
+    grid-area: shaderCanvas;
+    padding-top: calc(var(--tiny-padding) / 2);
+    padding-bottom: calc(var(--tiny-padding) / 2);
+
+    width: 37.5vw;
+    height: calc((37.5vw * 9) / 16);
+}
+
+@media (max-width: 1050px) {
+    body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .problem-title-container {
+        padding-left: var(--tiny-padding);
+        padding-right: var(--tiny-padding); 
+        border-top: none;
+    }
+
+    #shaderCanvas {
+        width: 80vw;
+        height: calc((80vw * 9) / 16);
+    }
+
+    #editor {
+        height: calc((80vw * 9) / 16);
+        width: 80vw;
+
+    }
+
+    .problem-image {
+
+        height: calc((80vw * 9) / 16);
+        width: 80vw;
+    }
+
+    .problem-description {
+        padding-left: var(--normal-padding);
+        padding-right: var(--normal-padding);
+        height: auto;
+        
+        margin-bottom: var(--tiny-padding);
+
+    }
+}

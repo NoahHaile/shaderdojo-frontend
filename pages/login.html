@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShaderDojo</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/login.css">
+</head>
+
+<body>
+    <header>
+        <div class="title-container">
+            <img src="../imgs/DojoLogo.png" class="logo" />
+            <h1 class="title">ShaderDojo</h1>
+        </div>
+        <nav>
+            <ul class="nav-container">
+                <li><a href="#" class="nav-link">Problems</a></li>
+                <li><a href="#" class="nav-link">Discussion</a></li>
+                <li><a href="#" class="nav-link">Profile</a></li>
+            </ul>
+        </nav>
+        <div class="menu-button" onclick="toggleDrawer()">☰</div>
+    </header>
+    <div id="drawer" class="drawer">
+        <a href="#" onclick="closeDrawer()">Problems</a>
+        <a href="#" onclick="closeDrawer()">Discussion</a>
+        <a href="#" onclick="closeDrawer()">Profile</a>
+    </div>
+
+    <script>
+        const drawer = document.getElementById("drawer");
+
+        function toggleDrawer() {
+            drawer.classList.toggle("open");
+        }
+
+        function closeDrawer() {
+            drawer.classList.remove("open");
+        }
+    </script>
+
+    <section>
+        <form onsubmit="return login(event)" method="POST">
+            <h1 class="page-title">Login</h1>
+            <div class="input-container">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" class="submit-button" onclick="buttonClick(this)">Sign In</button>
+            </div>
+        </form>
+        <form onsubmit="buttonClick(this); return register(event)" method="POST">
+            <h1 class="page-title">Sign-up</h1>
+            <div class="input-container">
+                <div class="form-group">
+                    <label for="username-signup">Username</label>
+                    <input type="text" id="username-signup" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password-signup">Password</label>
+                    <input type="password" id="password-signup" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" name="confirm-password" required>
+                </div>
+                <button type="submit" class="submit-button" onclick="buttonClick(this)">Create Account</button>
+            </div>
+        </form>
+    </section>
+    <script src="../scripts/button.js"></script>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div>
+                <p class="footer-text"><span style="font-weight: bold;">Bug Reports & Inquiries:</span> <a
+                        href="mailto:noah@noahhaile.com" class="email-link">noah@noahhaile.com</a></p>
+            </div>
+            <div class="social-icons">
+                <!-- Twitter -->
+                <a href="https://twitter.com/intent/tweet?text=Check%20this%20out!" target="_blank" class="social-link"
+                    title="Share on Twitter">
+                    <img src="https://img.icons8.com/ios-filled/24/twitter.png" alt="Twitter">
+                </a>
+                <!-- Facebook -->
+                <a href="https://facebook.com/sharer/sharer.php?u=YOUR_URL" target="_blank" class="social-link"
+                    title="Share on Facebook">
+                    <img src="https://img.icons8.com/ios-filled/24/facebook-new.png" alt="Facebook">
+                </a>
+                <!-- Instagram (direct link, as Instagram doesn’t support web shares) -->
+                <a href="https://instagram.com" target="_blank" class="social-link" title="Visit on Instagram">
+                    <img src="https://img.icons8.com/ios-filled/24/instagram-new.png" alt="Instagram">
+                </a>
+                <!-- GitHub -->
+                <a href="https://github.com" target="_blank" class="social-link" title="Visit on GitHub">
+                    <img src="https://img.icons8.com/ios-filled/24/github.png" alt="GitHub">
+                </a>
+                <!-- Email -->
+                <a href="mailto:?subject=Check%20this%20out!&body=I%20found%20something%20interesting:%20YOUR_URL"
+                    target="_blank" class="social-link" title="Share via Email">
+                    <img src="https://img.icons8.com/ios-filled/24/email.png" alt="Email">
+                </a>
+                <!-- LinkedIn -->
+                <a href="https://www.linkedin.com/sharing/share-offsite/?url=YOUR_URL" target="_blank"
+                    class="social-link" title="Share on LinkedIn">
+                    <img src="https://img.icons8.com/ios-filled/24/linkedin.png" alt="LinkedIn">
+                </a>
+                <!-- Reddit -->
+                <a href="https://reddit.com/submit?url=YOUR_URL&title=Check%20this%20out!" target="_blank"
+                    class="social-link" title="Share on Reddit">
+                    <img src="https://img.icons8.com/ios-filled/24/reddit.png" alt="Reddit">
+                </a>
+            </div>
+        </div>
+    </footer>
+    <script src="../scripts/login.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,231 @@
+:root {
+    --primary-color: #ffff83;
+    --secondary-color: #000;
+    --link-color: #fe7e7e;
+    --secondary-link-color: #DCCDE8;
+    --background-color: #ffffff;
+    --font-color: #333;
+    --font-color-light: #AAA;
+    --font-color-white: #FFF;
+    --hover-color: #f0f0f0;
+
+    --tiny-padding: calc(100vw / 96);
+    --small-padding: calc(100vw / 48);
+    --normal-padding: calc(100vw / 24);
+    --large-padding: calc(100vw / 12);
+    --larger-padding: calc(100vw / 4);
+    --huge-padding: calc(100vw / 3);
+
+    --larger-font-size: 32px;
+    --large-font-size: 24px;
+    --normal-font-size: 18px;
+    --small-font-size: 14px;
+    --smaller-font-size: 11px;
+
+    --border-radius: 20px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    box-sizing: border-box;
+
+    padding-left: var(--normal-padding);
+    padding-right: var(--normal-padding);
+
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+
+/* Header */
+
+header {
+    grid-area: header;
+    background-color: var(--background-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding-top: calc(var(--tiny-padding) / 2);
+    padding-bottom: calc(var(--tiny-padding) / 2);
+
+    color: var(--font-color);
+
+    width: 100%;
+}
+
+.title-container {
+    display: flex;
+    align-items: center;
+    gap: var(--tiny-padding);
+}
+
+.logo {
+    height: 75px;
+    width: 75px;
+}
+
+.title {
+    font-size: var(--larger-font-size);
+    color: var(--font-color);
+}
+
+.nav-container {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+    display: flex;
+    justify-content: space-between;
+
+    width: 37.5vw;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: var(--font-color);
+    font-size: var(--large-font-size);
+}
+
+.nav-link:hover {
+    text-decoration: underline;
+}
+
+.menu-button {
+    display: none;
+    font-size: var(--larger-font-size);
+    color: var(--font-color);
+    cursor: pointer;
+}
+
+/* Drawer container */
+.drawer {
+    position: absolute;
+    top: calc(56.25px);
+    right: -350px;
+
+
+    background-color: var(--background-color);
+    color: var(--font-color);
+    padding: var(--tiny-padding);
+
+    transition: right 0.3s ease-in-out;
+    z-index: 1000;
+    display: none;
+    flex-direction: column;
+    gap: var(--tiny-padding);
+
+    border: 1px solid var(--font-color-light);
+}
+
+/* Drawer header */
+.drawer-header {
+    display: flex;
+
+    align-items: center;
+}
+
+/* Drawer links */
+.drawer a {
+    text-decoration: none;
+    color: var(--font-color);
+    font-size: var(--normal-font-size);
+}
+
+.drawer a:hover {
+    text-decoration: underline;
+}
+
+/* Open drawer */
+.drawer.open {
+    right: 0;
+    display: flex;
+}
+
+
+
+/* Footer */
+.footer {
+    grid-area: footer;
+
+    color: var(--font-color);
+    text-align: center;
+    border-top: 1px solid var(--font-color-light);
+
+    margin-top: var(--small-padding);
+
+    padding: var(--tiny-padding);
+
+    padding-left: calc(75px + var(--tiny-padding));
+}
+
+.footer-content {
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer-text {
+    font-size: var(--small-font-size);
+    color: var(--font-color);
+}
+
+.email-link {
+    text-decoration: none;
+    color: var(--link-color);
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: var(--small-padding);
+}
+
+.social-link img {
+    width: 24px;
+    height: 24px;
+    filter: invert(30%);
+    transition: filter 0.3s ease;
+}
+
+.social-link img:hover {
+    filter: invert(0%);
+}
+
+
+@media (max-width: 1050px) {
+    .nav-link {
+        display: none;
+        /* Hide nav-links for smaller screens */
+    }
+
+    .nav-container {
+        width: auto;
+    }
+
+    .menu-button {
+        display: block;
+        /* Show menu button for smaller screens */
+    }
+
+    :root {
+        --larger-font-size: 28px;
+        --large-font-size: 20px;
+        --normal-font-size: 16px;
+        --small-font-size: 12px;
+        --smaller-font-size: 10px;
+    }
+
+    .logo {
+        height: 56.25px;
+        width: 56.25px;
+    }
+
+    .footer {
+        padding-left: 0;
+    }
+}

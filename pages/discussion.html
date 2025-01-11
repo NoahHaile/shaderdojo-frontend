@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShaderDojo</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/discussion.css">
+</head>
+
+<body>
+    <header>
+        <div class="title-container">
+            <img src="../imgs/DojoLogo.png" class="logo" />
+            <h1 class="title">ShaderDojo</h1>
+        </div>
+        <nav>
+            <ul class="nav-container">
+                <li><a href="#" class="nav-link">Problems</a></li>
+                <li><a href="#" class="nav-link">Discussion</a></li>
+                <li><a href="#" class="nav-link">Profile</a></li>
+            </ul>
+        </nav>
+        <div class="menu-button" onclick="toggleDrawer()">☰</div>
+    </header>
+    <div id="drawer" class="drawer">
+        <a href="#" onclick="closeDrawer()">Problems</a>
+        <a href="#" onclick="closeDrawer()">Discussion</a>
+        <a href="#" onclick="closeDrawer()">Profile</a>
+    </div>
+
+    <script>
+        const drawer = document.getElementById("drawer");
+
+        function toggleDrawer() {
+            drawer.classList.toggle("open");
+        }
+
+        function closeDrawer() {
+            drawer.classList.remove("open");
+        }
+    </script>
+
+    <main class="solution">
+        <h1 class="page-title">Accepted Solution</h1>
+        <div class="program">
+            <canvas id="shaderCanvas"></canvas>
+            <div class="editor-container">
+                <form>
+                    <div id="editor"></div>
+                </form>
+            </div>
+        </div>
+        <div class="button-container">
+            <button type="button" class="runner" onclick="buttonClick(this); runShader()">Run</button>
+        </div>
+    </main>
+
+    <section class="comment-section">
+        <h1 class="sub-title">Alternative Solutions</h1>
+        <div class="comments" id="comments">
+
+        </div>
+    </section>
+
+    <section class="post-comment-section">
+        <h1 class="sub-title">Post Your Own Solution</h1>
+        <form onsubmit="return postComment(event)" method="POST">
+            <textarea placeholder="Paste code" rows="10" cols="auto" id="code-post" name="code-post"></textarea>
+            <input type="text" id='content-post' name="content-post" placeholder="Describe your solution in brief" />
+            <button type="submit" class="submit-button" onclick="buttonClick(this)">Submit</button>
+        </form>
+    </section>
+
+
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div>
+                <p class="footer-text"><span style="font-weight: bold;">Bug Reports & Inquiries:</span> <a
+                        href="mailto:noah@noahhaile.com" class="email-link">noah@noahhaile.com</a></p>
+            </div>
+            <div class="social-icons">
+                <!-- Twitter -->
+                <a href="https://twitter.com/intent/tweet?text=Check%20this%20out!" target="_blank" class="social-link"
+                    title="Share on Twitter">
+                    <img src="https://img.icons8.com/ios-filled/24/twitter.png" alt="Twitter">
+                </a>
+                <!-- Facebook -->
+                <a href="https://facebook.com/sharer/sharer.php?u=YOUR_URL" target="_blank" class="social-link"
+                    title="Share on Facebook">
+                    <img src="https://img.icons8.com/ios-filled/24/facebook-new.png" alt="Facebook">
+                </a>
+                <!-- Email -->
+                <a href="mailto:?subject=Check%20this%20out!&body=I%20found%20something%20interesting:%20YOUR_URL"
+                    target="_blank" class="social-link" title="Share via Email">
+                    <img src="https://img.icons8.com/ios-filled/24/email.png" alt="Email">
+                </a>
+                <!-- LinkedIn -->
+                <a href="https://www.linkedin.com/sharing/share-offsite/?url=YOUR_URL" target="_blank"
+                    class="social-link" title="Share on LinkedIn">
+                    <img src="https://img.icons8.com/ios-filled/24/linkedin.png" alt="LinkedIn">
+                </a>
+                <!-- Reddit -->
+                <a href="https://reddit.com/submit?url=YOUR_URL&title=Check%20this%20out!" target="_blank"
+                    class="social-link" title="Share on Reddit">
+                    <img src="https://img.icons8.com/ios-filled/24/reddit.png" alt="Reddit">
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const id = "2138b6a6-d2cf-47c1-9f0b-ba0161e4c5c5";
+        const fragmentShaderSource = `
+void main()
+{
+    // Normalized pixel coordinates (from 0 to 1)
+    vec2 uv = gl_FragCoord.xy/u_resolution.xy;
+
+    // Time varying pixel color
+    vec3 col = 0.5 + 0.5*cos(u_time+uv.xyx+vec3(0,2,4));
+
+    // Output to screen
+    gl_FragColor = vec4(col,1.0);
+}
+`
+        const token = localStorage.getItem('token');
+
+        const errorModal = document.getElementById("errorModal");
+        if (token == null) {
+            window.location.href = "login.html?redirect=discussion.html";
+        }
+
+        async function api() {
+            await fetch(`http://localhost:7090/account/verify_account`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            }).then(response => {
+                if (response.status != 200) {
+                    window.location.href = "login.html?redirect=discussion.html";
+                }
+            }).catch(err => {
+                // errorModal.style.display = "block";
+                // errorModal.innerHTML = "An error occured while verifying your account. Please try again later.";
+                // throw Error("An error occured while verifying your account. Please try again later.");
+            });
+        }
+
+        api();
+    </script>
+    <script src="../scripts/button.js"></script>
+    <script src="../lib/ace/ace.js"></script>
+    <script src="../lib/ace/mode.js"></script>
+    <script src="../lib/ace/theme.js"></script>
+    <script src="../scripts/shader.js"></script>
+    <script src="../scripts/discussion.js"></script>
+</body>
+
+</html>

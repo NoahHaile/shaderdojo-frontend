@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShaderDojo</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/problem.css">
+</head>
+
+<body>
+    <header>
+        <div class="title-container">
+            <img src="../imgs/DojoLogo.png" class="logo" />
+            <h1 class="title">ShaderDojo</h1>
+        </div>
+        <nav>
+            <ul class="nav-container">
+                <li><a href="#" class="nav-link">Problems</a></li>
+                <li><a href="#" class="nav-link">Discussion</a></li>
+                <li><a href="#" class="nav-link">Profile</a></li>
+            </ul>
+        </nav>
+        <div class="menu-button" onclick="toggleDrawer()">☰</div>
+    </header>
+    <div id="drawer" class="drawer">
+        <a href="#" onclick="closeDrawer()">Problems</a>
+        <a href="#" onclick="closeDrawer()">Discussion</a>
+        <a href="#" onclick="closeDrawer()">Profile</a>
+    </div>
+
+    <script>
+        const drawer = document.getElementById("drawer");
+
+        function toggleDrawer() {
+            drawer.classList.toggle("open");
+        }
+
+        function closeDrawer() {
+            drawer.classList.remove("open");
+        }
+    </script>
+    <section class="problem-title-container" onclick="toggleExpand()">
+        <img src="../imgs/right-arrow-svgrepo-com.svg" class="expand-arrow" />
+        <h1 class="problem-title">Image Flip</h1>
+        <p class="expansion-instruction">Collapse</p>
+    </section>
+
+    <img src="../imgs/problem-example.jpg" class="problem-image" />
+    <div class="problem-description">
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem tempora ipsum earum! Earum,
+            suscipit
+            aliquid asperiores consectetur libero porro officia. Ex, consequuntur itaque. Nostrum tempore fugiat
+            illo
+            dignissimos consequuntur dolor!</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem tempora ipsum earum! Earum,
+            suscipit
+            aliquid asperiores consectetur libero porro officia. Ex, consequuntur itaque. Nostrum tempore fugiat
+            illo
+            dignissimos consequuntur dolor!</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem tempora ipsum earum! Earum,
+            suscipit
+            aliquid asperiores consectetur libero porro officia. Ex, consequuntur itaque. Nostrum tempore fugiat
+            illo
+            dignissimos consequuntur dolor!</p>
+    </div>
+
+    <canvas id="shaderCanvas"></canvas>
+    <div class="editor-container">
+        <p class="status-text">Problem Unattempted</p>
+        <form>
+            <div id="editor"></div>
+            <div class="button-container">
+                <button type="button" class="button1" onclick="buttonClick(this); runShader()">Run</button>
+                <button type="button" class="button2" onclick="buttonClick(this); submitShader()">Submit</button>
+            </div>
+        </form>
+    </div>
+
+
+    <script>
+        const id = "2138b6a6-d2cf-47c1-9f0b-ba0161e4c5c5";
+        const fragmentShaderSource = `
+void main()
+{
+    // Normalized pixel coordinates (from 0 to 1)
+    vec2 uv = gl_FragCoord.xy/u_resolution.xy;
+
+    // Time varying pixel color
+    vec3 col = 0.5 + 0.5*cos(u_time+uv.xyx+vec3(0,2,4));
+
+    // Output to screen
+    gl_FragColor = vec4(col,1.0);
+}
+`
+        const token = localStorage.getItem('token');
+
+        const errorModal = document.getElementById("errorModal");
+        if (token == null) {
+            window.location.href = "login.html?redirect=problem.html";
+        }
+
+        async function api() {
+            await fetch(`http://localhost:7090/account/verify_account`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            }).then(response => {
+                if (response.status != 200) {
+                    window.location.href = "login.html?redirect=problem.html";
+                }
+            }).catch(err => {
+                // errorModal.style.display = "block";
+                // errorModal.innerHTML = "An error occured while verifying your account. Please try again later.";
+                // throw Error("An error occured while verifying your account. Please try again later.");
+            });
+
+            const problemStatus = await fetch(`http://localhost:7090/account/status/${id}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            }).then(response => {
+                if (response.status != 200) {
+                    // errorModal.style.display = "block";
+                    // errorModal.innerHTML = "An error occured while fetching problem attempts.";
+                    // throw Error("An error occured while fetching the problem. Please try again later.");
+                }
+                return response.json();
+            }).catch(err => {
+                // errorModal.style.display = "block";
+                // errorModal.innerHTML = "An error occured while fetching problem attempts.";
+                // throw Error("An error occured while fetching the problem. Please try again later.");
+                return {
+                    status: "UNDEFINED",
+                    count: -1
+                };
+            });
+
+            const statusText = document.querySelector(".status-text");
+            if (problemStatus.status == "UNATTEMPTED") {
+                statusText.innerHTML = "Problem Unattempted";
+            } else if (problemStatus.status == "SUCCESSFUL") {
+                statusText.innerHTML = "Problem Completed. " + problemStatus.count + " attempts.";
+            } else if (problemStatus.status == "FAILED") {
+                statusText.innerHTML = "Problem attempted " + problemStatus.count + " times.";
+            } else {
+                statusText.innerHTML = "Failed to fetch problem status.";
+            }
+        }
+
+        api();
+
+
+    </script>
+    <script src="../scripts/button.js"></script>
+
+    <script src="../lib/ace/ace.js"></script>
+    <script src="../lib/ace/mode.js"></script>
+    <script src="../lib/ace/theme.js"></script>
+    <script src="../scripts/problem.js"></script>
+    <script src="../scripts/shader.js"></script>
+
+
+</body>
+
+</html>
