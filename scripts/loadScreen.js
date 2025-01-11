@@ -59,8 +59,7 @@ void main()
 
 
 `
-editor.setValue(fragmentShaderSource);
-editor.clearSelection();
+
 
 function createShader(gl, type, source) {
     const shader = gl.createShader(type);
@@ -91,7 +90,7 @@ function createProgram(gl, vertexSource, fragmentSource) {
 }
 
 function runShader() {
-    const text = fragmentShaderHeader + editor.getValue();
+    const text = fragmentShaderHeader + fragmentShaderSource;
     const fragmentShaderSource = text;
 
     const program = createProgram(gl, vertexShaderSource, fragmentShaderSource);
